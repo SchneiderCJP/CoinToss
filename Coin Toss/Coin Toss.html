@@ -1,0 +1,119 @@
+<!-- Name: Schneider Campfort Jean-Pierre -->
+<!-- Date: 10/16/2021 -->
+<!-- Tested with Google Chrome Browser -->
+
+<!DOCTYPE html>
+
+<html>
+   <head>
+      <meta charset = "utf-8">
+      <title>Heads or Tails Coin Toss </title> 
+      <style type = "text/css">
+         img           { margin-right: 10px;
+						height: 10%;
+						width: 10%;		 }
+         table         { width: 200px;
+                         border-collapse:collapse; 
+                         background-color: gold; }
+         table, td, th { border: 1px solid black; 
+                         padding: 4px; 
+                         margin-top: 20px; }
+         th            { text-align: left; 
+                         color: white;
+                         background-color: light brown; }
+      </style>
+      <script>
+	  
+		var frequency = [ , 0, 0 ]; 
+         
+        var totalCoin = 0;
+		 
+		var coinImages = new Array(10);
+		 
+		function start()
+         {
+            var button = document.getElementById( "flipButton" );
+            button.addEventListener( "click", flipCoin, false );
+			var length = coinImages.length;
+			
+			for( var i = 0; i < length; ++i )
+			{
+			    coinImages[i] = document.getElementById( "coin"  + (i+1) );
+			}
+         } 
+		 
+		 function flipCoin()
+         {
+            var side;  
+			var length = coinImages.length;
+			
+            for ( var i = 0; i < length; ++i ) 
+            {
+               side = Math.floor( 1 + Math.random() * 2);
+               tallyFlips( side ); 
+               setImage( i, side ); 
+               ++totalCoin;
+            }
+            updateFrequencyTable();
+         }
+		  function tallyFlips( side )
+         {
+           ++frequency[side];
+         }
+		 function setImage( coinNumber, side )
+         {
+		 
+		 // Made my own images.
+			if (side == 2)
+			{
+            coinImages[coinNumber].setAttribute("src", "heads.png");
+			coinImages[coinNumber].setAttribute("alt", "Head coin" );
+			}
+			else
+			{
+			coinImages[coinNumber].setAttribute("src", "TAILS.png");
+			coinImages[coinNumber].setAttribute("alt", "Tail coin" );
+			}
+			
+         }
+		 function updateFrequencyTable()
+         {
+		     var results = "<table>" + 
+               "<caption> Coin Tosses Frequencies</caption>" +
+			    "<thead><th>Side</th><th>Frequency</th>" + 
+               "<th>Percent</th></thead>" +
+               "<tbody>" + "<tr><td> Heads </td> <td>" + frequency[2] + "</td><td>" +
+				formatPercent(frequency[2]/totalCoin) + "</td></tr>" + "<tr><td> Tails </td> <td>" + frequency[1] + "</td><td>" +
+				formatPercent(frequency[1]/totalCoin) + "</td></tr>" + "</tbody></table>";
+			   
+			   document.getElementById( "frequencyTableDiv").innerHTML = results;
+            
+         } 
+		 function formatPercent( value )
+         {
+            value *= 100;
+            return value.toFixed(2);
+         } 
+		 window.addEventListener( "load", start, false );
+      </script>
+	</head>
+   <body> 
+   
+		<!-- Made my own images. -->
+      <p><img id = "coin1" src = "blankcoin.png" alt = "coin 1 image">
+         <img id = "coin2" src = "blankcoin.png" alt = "coin 2 image">
+         <img id = "coin3" src = "blankcoin.png" alt = "coin 3 image">
+         <img id = "coin4" src = "blankcoin.png" alt = "coin 4 image">
+         <img id = "coin5" src = "blankcoin.png" alt = "coin 5 image"></p>
+      <p><img id = "coin6" src = "blankcoin.png" alt = "coin 6 image">
+         <img id = "coin7" src = "blankcoin.png" alt = "coin 7 image">
+         <img id = "coin8" src = "blankcoin.png" alt = "coin 8 image">
+         <img id = "coin9" src = "blankcoin.png" alt = "coin 9 image">
+         <img id = "coin10" src = "blankcoin.png" alt = "coin 10 image"></p>
+      <form action = "#">
+         <input id = "flipButton" type = "button" value = "Toss">
+      </form>
+      <div id = "frequencyTableDiv"></div>
+   </body>
+</html>
+   
